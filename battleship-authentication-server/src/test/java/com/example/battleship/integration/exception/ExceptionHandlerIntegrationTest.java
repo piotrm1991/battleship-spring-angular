@@ -1,0 +1,103 @@
+package com.example.battleship.integration.exception;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.example.battleship.exception.AccessDeniedException;
+import com.example.battleship.exception.BadRequestException;
+import com.example.battleship.exception.EntityNotFoundException;
+import com.example.battleship.exception.UnAuthenticationException;
+import com.example.battleship.exception.ValidationException;
+import com.example.battleship.shared.AbstractIntegrationTest;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+
+/**
+ * Integration test for exception handling.
+ */
+public class ExceptionHandlerIntegrationTest extends AbstractIntegrationTest {
+
+  @Test
+  @WithMockUser(roles = {"ADMIN"})
+  public void givenAccessDenied_whenGetSpecificException_thenForbidden() throws Exception {
+    String exceptionParam = "accessDenied";
+
+    mockMvc.perform(get("/test/exception/{exception_id}", exceptionParam)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden())
+        .andExpect(result ->
+            assertTrue(result.getResolvedException() instanceof AccessDeniedException));
+  }
+
+  @Test
+  @WithMockUser(roles = {"ADMIN"})
+  public void givenBadRequest_whenGetSpecificException_thenBadRequest() throws Exception {
+    String exceptionParam = "badRequest";
+
+    mockMvc.perform(get("/test/exception/{exception_id}", exceptionParam)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest())
+        .andExpect(result ->
+            assertTrue(result.getResolvedException() instanceof BadRequestException))
+        .andExpect(result ->
+            assertEquals("bad arguments", result.getResolvedException().getMessage()));
+  }
+
+  @Test
+  @WithMockUser(roles = {"ADMIN"})
+  public void givenEntityNotFound_whenGetSpecificException_thenNotFound() throws Exception {
+    String exceptionParam = "entityNotFound";
+
+    mockMvc.perform(get("/test/exception/{exception_id}", exceptionParam)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound())
+        .andExpect(result ->
+            assertTrue(result.getResolvedException() instanceof EntityNotFoundException))
+        .andExpect(result ->
+            assertEquals("Entity not found.", result.getResolvedException().getMessage()));
+  }
+
+  @Test
+  @WithMockUser(roles = {"ADMIN"})
+  public void givenUnAuthentication_whenGetSpecificException_thenUnauthorized() throws Exception {
+    String exceptionParam = "unAuthentication";
+
+    mockMvc.perform(get("/test/exception/{exception_id}", exceptionParam)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized())
+        .andExpect(result ->
+            assertTrue(result.getResolvedException() instanceof UnAuthenticationException));
+  }
+
+  @Test
+  @WithMockUser(roles = {"ADMIN"})
+  public void givenValidation_whenGetSpecificException_thenBadRequest() throws Exception {
+    String exceptionParam = "validation";
+
+    mockMvc.perform(get("/test/exception/{exception_id}", exceptionParam)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest())
+        .andExpect(result ->
+            assertTrue(result.getResolvedException() instanceof ValidationException))
+        .andExpect(result ->
+            assertEquals("You didn't pass validation.",
+                    result.getResolvedException().getMessage()));
+  }
+
+  @Test
+  @WithMockUser(roles = {"ADMIN"})
+  public void givenOther_whenGetSpecificException_thenInternalServerError() throws Exception {
+    String exceptionParam = "test";
+
+    mockMvc.perform(get("/test/exception/{exception_id}", exceptionParam)
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isInternalServerError())
+        .andExpect(result -> assertNotNull(result.getResolvedException()))
+        .andExpect(result ->
+                assertEquals("internal error", result.getResolvedException().getMessage()));
+  }
+}
