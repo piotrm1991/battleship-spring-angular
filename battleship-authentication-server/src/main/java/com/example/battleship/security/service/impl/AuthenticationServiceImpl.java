@@ -52,12 +52,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     if (!authentication.isAuthenticated()) {
       throw new ValidationException("Error during validation");
     }
-    RefreshToken refreshToken = refreshTokenService.createRefreshToken(loginRequest.login());
     User authenticatedUser = userService.getUserByLogin(loginRequest.login());
 
     return  new LoginResponse(
             jwtService.generateToken(authenticatedUser),
-            refreshToken.getToken()
+            refreshTokenService.createRefreshToken(loginRequest.login())
     );
   }
 
@@ -65,7 +64,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   public RefreshTokenResponse getRefreshedToken(RefreshTokenRequest refreshTokenRequest) {
     log.info("Refreshing token.");
 
-    return refreshTokenService.getNewTokenByRefreshToken(refreshTokenRequest.refreshToken());
+    return refreshTokenService.getNewTokenByRefreshToken(refreshTokenRequest);
   }
 
   @Override
