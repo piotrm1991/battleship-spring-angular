@@ -1,11 +1,5 @@
 package com.example.battleship.security.request;
 
-import com.example.battleship.validators.LoginAlreadyExists;
-import com.example.battleship.validators.PasswordMatching;
-import com.example.battleship.validators.StrongPassword;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
 import static com.example.battleship.util.AuthenticationMessageConstants.CONFIRM_PASSWORD_IS_REQUIRED;
 import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_IS_REQUIRED;
 import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_SIZE_MIN_MESSAGE;
@@ -13,6 +7,15 @@ import static com.example.battleship.util.AuthenticationMessageConstants.PASSWOR
 import static com.example.battleship.util.AuthenticationMessageConstants.PASSWORD_IS_REQUIRED;
 import static com.example.battleship.util.AuthenticationMessageConstants.PASSWORD_SIZE_MIN_MESSAGE;
 
+import com.example.battleship.validators.LoginAlreadyExists;
+import com.example.battleship.validators.PasswordMatching;
+import com.example.battleship.validators.StrongPassword;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+/**
+ * A record representing a request for registration of new user.
+ */
 @PasswordMatching(
         password = "password",
         confirmPassword = "confirmPassword",
@@ -20,7 +23,7 @@ import static com.example.battleship.util.AuthenticationMessageConstants.PASSWOR
 )
 public record SignupRequest(
         @NotBlank(message = LOGIN_IS_REQUIRED)
-        @Size(min = 6, message = LOGIN_SIZE_MIN_MESSAGE)
+        @Size(min = 5, message = LOGIN_SIZE_MIN_MESSAGE)
         @LoginAlreadyExists
         String login,
 
@@ -30,6 +33,7 @@ public record SignupRequest(
         String password,
 
         @NotBlank(message = CONFIRM_PASSWORD_IS_REQUIRED)
+        @StrongPassword
         String confirmPassword
 ) {
 }

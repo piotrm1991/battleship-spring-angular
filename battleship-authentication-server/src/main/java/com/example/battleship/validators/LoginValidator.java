@@ -6,9 +6,8 @@ import com.example.battleship.user.request.UserUpdate;
 import com.example.battleship.user.service.UserService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import lombok.RequiredArgsConstructor;
-
 import java.util.Objects;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Custom validator that checks if the provided user login does not exist in the system.

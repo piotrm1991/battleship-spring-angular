@@ -1,6 +1,7 @@
 package com.example.battleship.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ public class ExceptionTestController {
       throws Exception {
     if ("accessDenied".equals(exceptionType)) {
 
-      throw new AccessDeniedException();
+      throw new AccessDeniedException("");
     } else if ("badRequest".equals(exceptionType)) {
 
       throw new BadRequestException("bad arguments");
@@ -36,7 +37,7 @@ public class ExceptionTestController {
       throw new EntityNotFoundException("Entity not found.");
     } else if ("unAuthentication".equals(exceptionType)) {
 
-      throw new UnAuthenticationException();
+      throw new UnAuthenticatedException();
     } else if ("validation".equals(exceptionType)) {
 
       throw new ValidationException("You didn't pass validation.");

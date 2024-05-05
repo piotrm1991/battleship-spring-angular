@@ -8,7 +8,7 @@ import java.io.Serial;
  * This exception typically occurs when attempting
  * to access a protected resource without proper authentication.
  */
-public class UnAuthenticationException extends RuntimeException {
+public class UnAuthenticatedException extends RuntimeException {
 
   @Serial
   private static final long serialVersionUID = -7995391136847642399L;

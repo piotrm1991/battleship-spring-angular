@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * Class contains configuration of user details service.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Configuration
@@ -20,21 +23,34 @@ public class UserDetailsServiceConfiguration {
 
   private final UserRepository userRepository;
 
+  /**
+   * Method declares bean UserDetailsService
+   * and declares the logic of finding the user in database.
+   *
+   * @return UserDetailsService.
+   */
   @Bean
-  UserDetailsService userDetailsService() {
+  public UserDetailsService userDetailsService() {
 
     return username -> userRepository.findByLogin(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
 
+  /**
+   * Method declares bean with PasswordEncoder.
+   *
+   * @return BCryptPasswordEncoder.
+   */
   @Bean
-  BCryptPasswordEncoder passwordEncoder() {
+  public BCryptPasswordEncoder passwordEncoder() {
 
     return new BCryptPasswordEncoder();
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
+          throws Exception {
+
     return config.getAuthenticationManager();
   }
 

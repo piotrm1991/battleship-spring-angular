@@ -1,10 +1,9 @@
 package com.example.battleship.security.config;
 
 import com.example.battleship.user.entity.User;
+import java.util.Objects;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 /**
  * Handles additional security checks.

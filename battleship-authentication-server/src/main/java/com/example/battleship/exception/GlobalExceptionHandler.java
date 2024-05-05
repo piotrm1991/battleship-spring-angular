@@ -3,18 +3,18 @@ package com.example.battleship.exception;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AccountStatusException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * GlobalExceptionHandler provides centralized handling of exceptions in the application.
@@ -97,22 +97,29 @@ public class GlobalExceptionHandler {
   }
 
   /**
-   * Handles UnAuthenticationException,
+   * Handles UnAuthenticatedException,
    * indicating that the user is not authenticated for a specific operation.
    *
    * @param ex The UnAuthenticationException that was thrown.
    * @return A ResponseEntity with an unauthorized status and an error message.
    */
-  @ExceptionHandler(UnAuthenticationException.class)
+  @ExceptionHandler(UnAuthenticatedException.class)
   public ResponseEntity<String> handleUnAuthenticationException(
-      UnAuthenticationException ex) {
-    log.error(UnAuthenticationException.class.getName()
+      UnAuthenticatedException ex) {
+    log.error(UnAuthenticatedException.class.getName()
         + " status: " + HttpStatus.UNAUTHORIZED.value());
 
     return new ResponseEntity<>("You must log in to your account.",
         HttpStatus.UNAUTHORIZED);
   }
 
+  /**
+   * Handles AccountStatusException,
+   * indicating that the user account status is DISABLED.
+   *
+   * @param ex The AccountStatusException that was thrown.
+   * @return A ResponseEntity with an account locked status and an error message.
+   */
   @ExceptionHandler(AccountStatusException.class)
   public ResponseEntity<String> handleAccountStatusException(
           AccountStatusException ex) {
@@ -123,6 +130,13 @@ public class GlobalExceptionHandler {
             HttpStatus.FORBIDDEN);
   }
 
+  /**
+   * Handles SignatureException,
+   * indicating that the user tried to use wrong JWT accessToken.
+   *
+   * @param ex The SignatureException that was thrown.
+   * @return A ResponseEntity with a wrong jwt status and an error message.
+   */
   @ExceptionHandler(SignatureException.class)
   public ResponseEntity<String> handleSignatureException(
           SignatureException ex) {
@@ -133,39 +147,58 @@ public class GlobalExceptionHandler {
             HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler(value = {
-          ExpiredJwtException.class
-  })
+  /**
+   * Handles ExpiredJwtException,
+   * indicating that the user tried to use JWT accessToken that has already expired.
+   *
+   * @param ex The ExpiredJwtException that was thrown.
+   * @return A ResponseEntity with as expired access accessToken status and an error message.
+   */
+  @ExceptionHandler(value = {ExpiredJwtException.class})
   public ResponseEntity<Object> handleExpiredJwtException(
           ExpiredJwtException ex) {
     log.error(ExpiredJwtException.class.getName()
             + " status: " + HttpStatus.FORBIDDEN.value());
 
-    return new ResponseEntity<>("The JWT token has expired.",
+    return new ResponseEntity<>("The JWT accessToken has expired.",
             HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler(value = {
-          ExpiredRefreshTokenException.class
-  })
+  /**
+   * Handles ExpiredRefreshTokenException,
+   * indicating that the user tried to refresh JWT access accessToken
+   * with expired refresh accessToken.
+   *
+   * @param ex The ExpiredRefreshTokenException that was thrown.
+   * @return A ResponseEntity with as expired refresh accessToken status and an error message.
+   */
+  @ExceptionHandler(value = {ExpiredRefreshTokenException.class})
   public ResponseEntity<Object> handleExpiredRefreshTokenException(
           ExpiredRefreshTokenException ex) {
     log.error(ExpiredRefreshTokenException.class.getName()
             + " status: " + HttpStatus.FORBIDDEN.value());
 
-    return new ResponseEntity<>("Refresh token is expired. Please login again!",
+    return new ResponseEntity<>("Refresh accessToken is expired. Please login again!",
             HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler(value = {
-          RefreshTokenNotFoundException.class
-  })
+  /**
+   * Handles RefreshTokenNotFoundException,
+   * indicating that the user tried to refresh JWT access accessToken with refresh accessToken,
+   * that doesn't exist int database.
+   *
+   * @param ex The RefreshTokenNotFoundException that was thrown.
+   * @return A ResponseEntity with as refresh accessToken not in
+   *          database status and an error message.
+   */
+  @ExceptionHandler(value = {RefreshTokenNotFoundException.class})
   public ResponseEntity<Object> handleRefreshTokenNotFoundException(
-          RefreshTokenNotFoundException ex) {
+          RefreshTokenNotFoundException ex
+  ) {
     log.error(RefreshTokenNotFoundException.class.getName()
             + " status: " + HttpStatus.INTERNAL_SERVER_ERROR.value());
 
-    return new ResponseEntity<>("Refresh token error occurred.",
+    return new ResponseEntity<>("Refresh accessToken error occurred.",
             HttpStatus.INTERNAL_SERVER_ERROR);
   }
 

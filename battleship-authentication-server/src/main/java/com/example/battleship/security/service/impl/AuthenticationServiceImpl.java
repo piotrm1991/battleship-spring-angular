@@ -1,7 +1,6 @@
 package com.example.battleship.security.service.impl;
 
 import com.example.battleship.exception.ValidationException;
-import com.example.battleship.security.entity.RefreshToken;
 import com.example.battleship.security.mapper.AuthenticationMapper;
 import com.example.battleship.security.request.LoginRequest;
 import com.example.battleship.security.request.LogoutRequest;
@@ -21,6 +20,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the AuthenticationService interface
+ * for managing authentication-related requests.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -61,17 +64,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @Override
-  public RefreshTokenResponse getRefreshedToken(RefreshTokenRequest refreshTokenRequest) {
-    log.info("Refreshing token.");
+  public RefreshTokenResponse getRefreshedAccessToken(RefreshTokenRequest refreshTokenRequest) {
+    log.info("Refreshing accessToken.");
 
     return refreshTokenService.getNewTokenByRefreshToken(refreshTokenRequest);
   }
 
   @Override
-  public String logout(LogoutRequest logoutRequest) {
+  public void logout(LogoutRequest logoutRequest) {
     log.info("Logging out user.");
-    refreshTokenService.deleteRefreshToken(logoutRequest.refreshToken());
 
-    return "Logged out was successful";
+    refreshTokenService.deleteRefreshToken(logoutRequest.refreshToken());
   }
 }

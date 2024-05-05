@@ -1,11 +1,13 @@
 package com.example.battleship.security.repository;
 
 import com.example.battleship.security.entity.RefreshToken;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
+/**
+ * Repository interface for performing database operations on RefreshToken entities.
+ */
 @Repository
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
 

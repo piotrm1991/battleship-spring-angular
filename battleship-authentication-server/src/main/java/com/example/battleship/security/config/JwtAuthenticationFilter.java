@@ -1,9 +1,11 @@
 package com.example.battleship.security.config;
 
-import java.io.IOException;
-
-import com.example.battleship.exception.ValidationException;
 import com.example.battleship.security.service.JwtService;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
@@ -17,11 +19,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
+/**
+ * Class responsible ofr filtering requests and checking if
+ * requests are authorized with correct JWT accessToken.
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -41,12 +42,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     if (authHeader == null || !authHeader.startsWith("Bearer ")) {
       filterChain.doFilter(request, response);
+
       return;
     }
 
     try {
       final String jwt = authHeader.substring(7);
-      final String login = jwtService.extractUsername(jwt);
+      final String login = jwtService.extractLogin(jwt);
 
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -59,6 +61,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                   null,
                   userDetails.getAuthorities()
           );
+
+          System.out.println(userDetails);
 
           authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
           SecurityContextHolder.getContext().setAuthentication(authToken);

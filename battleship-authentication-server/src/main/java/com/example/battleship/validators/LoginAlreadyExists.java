@@ -1,15 +1,14 @@
 package com.example.battleship.validators;
 
+import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_ALREADY_EXISTS;
+
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_ALREADY_EXISTS;
 
 /**
  * Custom validation annotation to ensure that

@@ -1,14 +1,14 @@
 package com.example.battleship.user.request;
 
+import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_IS_REQUIRED;
+import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_SIZE_MIN_MESSAGE;
+
 import com.example.battleship.user.enums.UserRoleEnum;
 import com.example.battleship.user.enums.UserStatusEnum;
 import com.example.battleship.validators.LoginAlreadyExists;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_IS_REQUIRED;
-import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_SIZE_MIN_MESSAGE;
 
 /**
  * Represents a request object for update user.

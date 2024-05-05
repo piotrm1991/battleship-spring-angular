@@ -1,5 +1,8 @@
 package com.example.battleship.user.service.impl;
 
+import static com.example.battleship.util.ExceptionMessagesConstants.createEntityNotExistsMessage;
+import static com.example.battleship.util.ExceptionMessagesConstants.createUserWithLoginNotExistsMessage;
+
 import com.example.battleship.exception.EntityNotFoundException;
 import com.example.battleship.user.entity.User;
 import com.example.battleship.user.enums.UserRoleEnum;
@@ -17,10 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-
-import static com.example.battleship.util.ExceptionMessagesConstants.createEntityNotExistsMessage;
-import static com.example.battleship.util.ExceptionMessagesConstants.createUserWithLoginNotExistsMessage;
 
 /**
  * Service implementation for user-related operations.

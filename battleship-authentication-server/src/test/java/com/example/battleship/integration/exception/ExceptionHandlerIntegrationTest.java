@@ -6,14 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.example.battleship.exception.AccessDeniedException;
 import com.example.battleship.exception.BadRequestException;
 import com.example.battleship.exception.EntityNotFoundException;
-import com.example.battleship.exception.UnAuthenticationException;
+import com.example.battleship.exception.UnAuthenticatedException;
 import com.example.battleship.exception.ValidationException;
 import com.example.battleship.shared.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithMockUser;
 
 /**
@@ -70,7 +70,7 @@ public class ExceptionHandlerIntegrationTest extends AbstractIntegrationTest {
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isUnauthorized())
         .andExpect(result ->
-            assertTrue(result.getResolvedException() instanceof UnAuthenticationException));
+            assertTrue(result.getResolvedException() instanceof UnAuthenticatedException));
   }
 
   @Test

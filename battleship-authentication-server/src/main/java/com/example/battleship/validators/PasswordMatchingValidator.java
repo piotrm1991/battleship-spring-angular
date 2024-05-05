@@ -2,10 +2,9 @@ package com.example.battleship.validators;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanWrapperImpl;
-
-import java.util.Objects;
 
 /**
  * Custom validator that checks if two password fields in an object match.

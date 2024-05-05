@@ -1,15 +1,14 @@
 package com.example.battleship.validators;
 
+import static com.example.battleship.util.AuthenticationMessageConstants.STRONG_PASSWORD_MESSAGE;
+
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import static com.example.battleship.util.AuthenticationMessageConstants.STRONG_PASSWORD_MESSAGE;
 
 /**
  * Custom validation annotation to ensure that a password meets specific strength criteria.

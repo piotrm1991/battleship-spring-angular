@@ -1,14 +1,13 @@
 package com.example.battleship.validators;
 
+import static com.example.battleship.util.AuthenticationMessageConstants.PASSWORDS_MUST_MATCH_DEFAULT;
+
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import static com.example.battleship.util.AuthenticationMessageConstants.PASSWORDS_MUST_MATCH_DEFAULT;
 
 /**
  * Custom validation annotation to ensure that two password fields match.

@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper class for mapping between authentication-related DTOs and entities.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -15,6 +18,12 @@ public class AuthenticationMapper {
 
   private final ObjectMapper mapper;
 
+  /**
+   * Maps SignupRequest record to UserCreate record.
+   *
+   * @param signupRequest SignupRequest with data for registration.
+   * @return UserCreate request for UserService.
+   */
   public UserCreate mapSignupRequestToUserCreate(SignupRequest signupRequest) {
     log.info("Mapping signup request to user create.");
     try {
