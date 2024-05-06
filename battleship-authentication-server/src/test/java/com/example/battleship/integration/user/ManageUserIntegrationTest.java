@@ -1,5 +1,12 @@
 package com.example.battleship.integration.user;
 
+import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_ALREADY_EXISTS;
+import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_IS_REQUIRED;
+import static com.example.battleship.util.ExceptionMessagesConstants.createEntityNotExistsMessage;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.example.battleship.shared.AbstractIntegrationTest;
 import com.example.battleship.user.UserHelper;
 import com.example.battleship.user.entity.User;
@@ -10,20 +17,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.util.List;
-
-import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_ALREADY_EXISTS;
-import static com.example.battleship.util.AuthenticationMessageConstants.LOGIN_IS_REQUIRED;
-import static com.example.battleship.util.ExceptionMessagesConstants.createEntityNotExistsMessage;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Integration tests for POST, PUT, DELETE operations on User entity.

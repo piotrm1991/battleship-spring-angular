@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests of date time serialization.
+ */
 public class LocalDateTimeSerializerTest {
 
   @Test
@@ -22,7 +25,8 @@ public class LocalDateTimeSerializerTest {
 
     String expectedDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
-    String expectedSerializedDateTime = localDateTime.format(DateTimeFormatter.ofPattern(expectedDateTimeFormat));
+    String expectedSerializedDateTime = localDateTime
+            .format(DateTimeFormatter.ofPattern(expectedDateTimeFormat));
 
     String serializedDateTime = objectMapper.writeValueAsString(localDateTime);
 

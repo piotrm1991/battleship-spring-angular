@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity for testing serialization and deserialization of date time.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

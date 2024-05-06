@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests of date serialization.
+ */
 public class LocalDateSerializerTest {
 
   @Test

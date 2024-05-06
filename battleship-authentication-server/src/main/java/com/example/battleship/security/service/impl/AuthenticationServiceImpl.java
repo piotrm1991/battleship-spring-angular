@@ -1,7 +1,5 @@
 package com.example.battleship.security.service.impl;
 
-import com.example.battleship.exception.ValidationException;
-import com.example.battleship.security.mapper.AuthenticationMapper;
 import com.example.battleship.security.request.LoginRequest;
 import com.example.battleship.security.request.LogoutRequest;
 import com.example.battleship.security.request.RefreshTokenRequest;
@@ -17,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,13 +29,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   private final JwtService jwtService;
   private final UserService userService;
   private final AuthenticationManager authenticationManager;
-  private final AuthenticationMapper authenticationMapper;
   private final RefreshTokenService refreshTokenService;
 
   @Override
   public String signup(SignupRequest signupRequest) {
     log.info("Registering new user with login: {}", signupRequest.login());
-    userService.createUser(authenticationMapper.mapSignupRequestToUserCreate(signupRequest));
+    userService.createUser(signupRequest);
 
     return "Registration successful!";
   }
@@ -46,15 +42,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
   @Override
   public LoginResponse authenticate(LoginRequest loginRequest) {
     log.info("Authenticating user with login: {}", loginRequest.login());
-    Authentication authentication = authenticationManager.authenticate(
+    authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                     loginRequest.login(),
                     loginRequest.password()
             )
     );
-    if (!authentication.isAuthenticated()) {
-      throw new ValidationException("Error during validation");
-    }
     User authenticatedUser = userService.getUserByLogin(loginRequest.login());
 
     return  new LoginResponse(

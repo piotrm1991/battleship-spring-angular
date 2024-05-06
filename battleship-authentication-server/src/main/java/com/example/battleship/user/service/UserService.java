@@ -1,5 +1,6 @@
 package com.example.battleship.user.service;
 
+import com.example.battleship.security.request.SignupRequest;
 import com.example.battleship.user.entity.User;
 import com.example.battleship.user.request.UserCreate;
 import com.example.battleship.user.request.UserUpdate;
@@ -60,6 +61,14 @@ public interface UserService {
    * @return A UserResponse representing the created user.
    */
   UserResponse createUser(UserCreate userCreate);
+
+  /**
+   * Creates a new user based on the provided SignupRequest request.
+   *
+   * @param signupRequest The SignupRequest request containing user details.
+   * @return A UserResponse representing the created user.
+   */
+  UserResponse createUser(SignupRequest signupRequest);
 
   /**
    * Retrieves User object by id.

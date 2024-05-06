@@ -4,6 +4,7 @@ import static com.example.battleship.util.ExceptionMessagesConstants.createEntit
 import static com.example.battleship.util.ExceptionMessagesConstants.createUserWithLoginNotExistsMessage;
 
 import com.example.battleship.exception.EntityNotFoundException;
+import com.example.battleship.security.request.SignupRequest;
 import com.example.battleship.user.entity.User;
 import com.example.battleship.user.enums.UserRoleEnum;
 import com.example.battleship.user.enums.UserStatusEnum;
@@ -80,6 +81,20 @@ public class UserServiceImpl implements UserService {
     if (userCreate.role() == null) {
       user.setRole(UserRoleEnum.USER);
     }
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    save(user);
+
+    return userMapper.mapEntityToResponse(user);
+  }
+
+  @Override
+  @Transactional
+  public UserResponse createUser(SignupRequest signupRequest) {
+    log.info("Creating new user with login: {}", signupRequest.login());
+
+    User user = userMapper.mapSignupRequestToEntity(signupRequest);
+    user.setStatus(UserStatusEnum.ENABLED);
+    user.setRole(UserRoleEnum.USER);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     save(user);
 

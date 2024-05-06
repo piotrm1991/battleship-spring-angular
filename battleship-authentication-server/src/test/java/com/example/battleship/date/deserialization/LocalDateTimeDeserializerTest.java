@@ -12,6 +12,9 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests of date time deserialization.
+ */
 public class LocalDateTimeDeserializerTest {
 
   private ObjectMapper mapper;
@@ -39,6 +42,9 @@ public class LocalDateTimeDeserializerTest {
 
     String actualMessage = exception.getMessage();
 
-    assertThat(actualMessage, containsString("Error while deserializing date and time use format: yyyy-MM-dd HH:mm:ss"));
+    assertThat(
+          actualMessage,
+          containsString("Error while deserializing date and time use format: yyyy-MM-dd HH:mm:ss")
+    );
   }
 }

@@ -1,5 +1,6 @@
 package com.example.battleship.user.mapper;
 
+import com.example.battleship.security.request.SignupRequest;
 import com.example.battleship.user.entity.User;
 import com.example.battleship.user.request.UserCreate;
 import com.example.battleship.user.request.UserUpdate;
@@ -77,5 +78,24 @@ public class UserMapper {
     }
 
     return user;
+  }
+
+  /**
+   * Maps a SignupRequest DTO to a User entity.
+   *
+   * @param signupRequest The SignupRequest DTO to be mapped.
+   * @return A User entity.
+   */
+  public User mapSignupRequestToEntity(SignupRequest signupRequest) {
+
+    log.info("Mapping signup request to user.");
+    try {
+
+      return mapper.readValue(mapper.writeValueAsString(signupRequest), User.class);
+    } catch (JsonProcessingException e) {
+
+      throw new RuntimeException(
+              "Error while mapping signup request to entity " + e.getMessage(), e);
+    }
   }
 }

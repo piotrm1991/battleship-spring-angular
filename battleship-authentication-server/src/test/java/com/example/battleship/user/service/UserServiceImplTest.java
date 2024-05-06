@@ -1,33 +1,5 @@
 package com.example.battleship.user.service;
 
-import com.example.battleship.date.service.DateService;
-import com.example.battleship.exception.EntityNotFoundException;
-import com.example.battleship.exception.ValidationException;
-import com.example.battleship.user.UserHelper;
-import com.example.battleship.user.entity.User;
-import com.example.battleship.user.enums.UserStatusEnum;
-import com.example.battleship.user.mapper.UserMapper;
-import com.example.battleship.user.repository.UserRepository;
-import com.example.battleship.user.request.UserCreate;
-import com.example.battleship.user.request.UserUpdate;
-import com.example.battleship.user.response.UserResponse;
-import com.example.battleship.user.service.impl.UserServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.List;
-import java.util.Optional;
-
 import static com.example.battleship.util.ExceptionMessagesConstants.createEntityNotExistsMessage;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,6 +12,32 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.example.battleship.exception.EntityNotFoundException;
+import com.example.battleship.exception.ValidationException;
+import com.example.battleship.user.UserHelper;
+import com.example.battleship.user.entity.User;
+import com.example.battleship.user.enums.UserStatusEnum;
+import com.example.battleship.user.mapper.UserMapper;
+import com.example.battleship.user.repository.UserRepository;
+import com.example.battleship.user.request.UserCreate;
+import com.example.battleship.user.request.UserUpdate;
+import com.example.battleship.user.response.UserResponse;
+import com.example.battleship.user.service.impl.UserServiceImpl;
+import java.util.List;
+import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Unit tests for implementation of UserService.

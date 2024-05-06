@@ -6,8 +6,6 @@ import com.example.battleship.user.enums.UserStatusEnum;
 import com.example.battleship.user.request.UserCreate;
 import com.example.battleship.user.request.UserUpdate;
 import com.example.battleship.user.response.UserResponse;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +47,27 @@ public class UserHelper {
   }
 
   /**
+   * Creates User object based on given data.
+   *
+   * @return User entity.
+   */
+  public static User createUser(
+          String login,
+          String password,
+          UserRoleEnum role,
+          UserStatusEnum status
+  ) {
+
+    return User.builder()
+            .login(login)
+            .password(password)
+            .role(role)
+            .status(status)
+            .createDate(createDate)
+            .build();
+  }
+
+  /**
    * Creates UserCreate record request.
    *
    * @return UserCreate record.
@@ -77,6 +96,27 @@ public class UserHelper {
         status,
         createDate.toString(),
         updateDate.toString()
+    );
+  }
+
+  /**
+   * Creates UserResponse record based on given data.
+   *
+   * @return UserResponse record.
+   */
+  public static UserResponse createUserResponse(
+          String login,
+          UserRoleEnum role,
+          UserStatusEnum status
+  ) {
+
+    return new UserResponse(
+            id,
+            login,
+            role,
+            status,
+            createDate.toString(),
+            updateDate.toString()
     );
   }
 

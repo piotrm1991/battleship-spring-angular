@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 /**
  * Implementation of RefreshTokenService interface for managing refresh token requests.
  */
@@ -44,7 +45,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     String token = UUID.randomUUID().toString();
 
     RefreshToken refreshToken = RefreshToken.builder()
-            .user(userService.getUserByLogin(login))
+            .user(user)
             .token(passwordEncoder.encode(token))
             .expiryDate(Instant.now().plusMillis(600000))
             .build();

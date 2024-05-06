@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AccountStatusException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -158,10 +159,10 @@ public class GlobalExceptionHandler {
   public ResponseEntity<Object> handleExpiredJwtException(
           ExpiredJwtException ex) {
     log.error(ExpiredJwtException.class.getName()
-            + " status: " + HttpStatus.FORBIDDEN.value());
+            + " status: " + HttpStatus.UNAUTHORIZED.value());
 
     return new ResponseEntity<>("The JWT accessToken has expired.",
-            HttpStatus.FORBIDDEN);
+            HttpStatus.UNAUTHORIZED);
   }
 
   /**
@@ -200,6 +201,25 @@ public class GlobalExceptionHandler {
 
     return new ResponseEntity<>("Refresh accessToken error occurred.",
             HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  /**
+   * Handles BadCredentialsException,
+   * indicating that the user tried to log into the system
+   * with wrong credentials.
+   *
+   * @param ex The BadCredentialsException that was thrown.
+   * @return A ResponseEntity with a bad credentials status and an error message.
+   */
+  @ExceptionHandler(value = {BadCredentialsException.class})
+  public ResponseEntity<Object> handleBadCredentialsException(
+          BadCredentialsException ex
+  ) {
+    log.error(BadCredentialsException.class.getName()
+            + " status: " + HttpStatus.UNAUTHORIZED.value());
+
+    return new ResponseEntity<>("Wrong credentials. Try again!",
+            HttpStatus.UNAUTHORIZED);
   }
 
   /**
