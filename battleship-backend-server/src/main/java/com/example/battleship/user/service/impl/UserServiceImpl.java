@@ -2,16 +2,16 @@ package com.example.battleship.user.service.impl;
 
 import com.example.battleship.exception.EntityNotFoundException;
 import com.example.battleship.security.request.SignupRequest;
+import com.example.battleship.user.entity.User;
 import com.example.battleship.user.enums.UserRoleEnum;
 import com.example.battleship.user.enums.UserStatusEnum;
 import com.example.battleship.user.mapper.UserMapper;
-import com.example.battleship.util.ExceptionMessagesConstants;
-import com.example.battleship.user.entity.User;
 import com.example.battleship.user.repository.UserRepository;
 import com.example.battleship.user.request.UserCreate;
 import com.example.battleship.user.request.UserUpdate;
 import com.example.battleship.user.response.UserResponse;
 import com.example.battleship.user.service.UserService;
+import com.example.battleship.util.ExceptionMessagesConstants;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -113,7 +113,12 @@ public class UserServiceImpl implements UserService {
 
     return userRepository.findById(userId).orElseThrow(()
         -> new EntityNotFoundException(
-                ExceptionMessagesConstants.createEntityNotExistsMessage(User.class.getSimpleName(), userId)));
+                ExceptionMessagesConstants
+                        .createEntityNotExistsMessage(
+                                User.class.getSimpleName(),
+                                userId)
+            )
+    );
   }
 
   @Override

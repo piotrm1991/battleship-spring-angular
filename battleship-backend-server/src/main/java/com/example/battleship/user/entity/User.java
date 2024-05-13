@@ -14,6 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -38,6 +39,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
+  @Serial
+  private static final long serialVersionUID = -2263675895888542572L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

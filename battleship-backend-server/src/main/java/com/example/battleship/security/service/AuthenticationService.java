@@ -1,11 +1,11 @@
 package com.example.battleship.security.service;
 
+import com.example.battleship.security.request.LoginRequest;
 import com.example.battleship.security.request.LogoutRequest;
 import com.example.battleship.security.request.RefreshTokenRequest;
 import com.example.battleship.security.request.SignupRequest;
-import com.example.battleship.security.response.RefreshTokenResponse;
-import com.example.battleship.security.request.LoginRequest;
 import com.example.battleship.security.response.LoginResponse;
+import com.example.battleship.security.response.RefreshTokenResponse;
 
 /**
  * Service interface for managing authentication requests.
