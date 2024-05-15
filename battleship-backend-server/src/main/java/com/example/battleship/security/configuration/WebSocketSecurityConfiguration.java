@@ -1,4 +1,4 @@
-package com.example.battleship.globalchat.security;
+package com.example.battleship.security.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

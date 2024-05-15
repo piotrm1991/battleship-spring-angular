@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
  * Repository interface for performing database operations on RefreshToken entities.
  */
 @Repository
+//@Transactional("tm1")
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
 
   Optional<RefreshToken> findByToken(String token);

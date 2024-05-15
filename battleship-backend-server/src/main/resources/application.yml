@@ -13,11 +13,21 @@ spring:
     table: schema_history_table
     baseline-on-migrate: true
     out-of-order: true
-  datasource:
-    url: jdbc:mysql://${DB_URL}:${DB_PORT}/${DB_NAME}
-    username: ${DB_USER}
-    password: ${DB_PASS}
-    driverClassName: com.mysql.cj.jdbc.Driver
+  h2:
+    datasource:
+      url: jdbc:h2:file:~/test
+      username: sa
+      password:
+      driverClassName: org.h2.Driver
+    console:
+      enabled: true
+      path: /h2-console
+  mysql:
+    datasource:
+      url: jdbc:mysql://${DB_URL}:${DB_PORT}/${DB_NAME}
+      username: ${DB_USER}
+      password: ${DB_PASS}
+      driverClassName: com.mysql.cj.jdbc.Driver
   sql:
     init:
       continue-on-error: true

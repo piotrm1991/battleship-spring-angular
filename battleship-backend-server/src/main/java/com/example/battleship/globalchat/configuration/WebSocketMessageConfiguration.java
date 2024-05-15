@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @Configuration
 @EnableWebSocket
 @RequiredArgsConstructor
-public class WebSocketsMessageConfig implements WebSocketConfigurer {
+public class WebSocketMessageConfiguration implements WebSocketConfigurer {
   private static final String CHAT_ENDPOINT = "/chat";
 
   private final GlobalChatHandler globalChatHandler;
