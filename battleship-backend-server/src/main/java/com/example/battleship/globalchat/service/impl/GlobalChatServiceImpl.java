@@ -3,9 +3,9 @@ package com.example.battleship.globalchat.service.impl;
 import static com.example.battleship.util.GlobalChatMessages.getMessageNewUserJoinsChat;
 import static com.example.battleship.util.GlobalChatMessages.getMessageUserLeavesChat;
 
-import com.example.battleship.globalchat.mapper.ChatMessageMapper;
-import com.example.battleship.globalchat.model.ChatMessage;
-import com.example.battleship.globalchat.model.MessageType;
+import com.example.battleship.globalchat.mapper.GlobalChatMessageMapper;
+import com.example.battleship.globalchat.message.GlobalChatMessage;
+import com.example.battleship.globalchat.enums.GlobalChatMessageType;
 import com.example.battleship.globalchat.service.GlobalChatService;
 import java.io.IOException;
 import java.util.Objects;
@@ -24,8 +24,8 @@ import org.springframework.web.socket.WebSocketSession;
 @RequiredArgsConstructor
 public class GlobalChatServiceImpl implements GlobalChatService {
 
-  private final WebsocketSessionsList webSocketSessions;
-  private final ChatMessageMapper mapper;
+  private final GlobalChatWebsocketSessionsList webSocketSessions;
+  private final GlobalChatMessageMapper mapper;
 
   @Override
   public void handleNewUserJoinsGlobalChat(WebSocketSession session) {
@@ -50,38 +50,38 @@ public class GlobalChatServiceImpl implements GlobalChatService {
   private TextMessage prepareNewConnectionMessage(WebSocketSession session) {
     String userLogin = Objects.requireNonNull(session.getPrincipal()).getName();
     log.info("Preparing message new user {} joins the chat.", userLogin);
-    ChatMessage chatMessage = mapper
+    GlobalChatMessage globalChatMessage = mapper
             .prepareChatMessageRecord(
-                    MessageType.CONNECT,
+                    GlobalChatMessageType.CONNECT,
                     "SYSTEM",
                     getMessageNewUserJoinsChat(userLogin)
             );
 
-    return new TextMessage(mapper.writeChatMessageAsString(chatMessage));
+    return new TextMessage(mapper.writeChatMessageAsString(globalChatMessage));
   }
 
   private TextMessage prepareDeleteConnectionMessage(WebSocketSession session) {
     String userLogin = Objects.requireNonNull(session.getPrincipal()).getName();
     log.info("Preparing message user {} leaves the chat.", userLogin);
-    ChatMessage chatMessage = mapper
+    GlobalChatMessage globalChatMessage = mapper
             .prepareChatMessageRecord(
-                    MessageType.DISCONNECT,
+                    GlobalChatMessageType.DISCONNECT,
                     "SYSTEM",
                     getMessageUserLeavesChat(userLogin));
 
-    return new TextMessage(mapper.writeChatMessageAsString(chatMessage));
+    return new TextMessage(mapper.writeChatMessageAsString(globalChatMessage));
   }
 
   private TextMessage prepareMessageFromUser(WebSocketSession session, TextMessage messageText) {
     String userLogin = Objects.requireNonNull(session.getPrincipal()).getName();
     log.info("Preparing message from {} for global chat.", userLogin);
-    ChatMessage chatMessage = mapper
+    GlobalChatMessage globalChatMessage = mapper
             .prepareChatMessageRecord(
-                    MessageType.CHAT,
+                    GlobalChatMessageType.CHAT,
                     userLogin,
                     messageText.getPayload());
 
-    return new TextMessage(mapper.writeChatMessageAsString(chatMessage));
+    return new TextMessage(mapper.writeChatMessageAsString(globalChatMessage));
   }
 
   private void sendMessageToAllSessions(TextMessage message) {

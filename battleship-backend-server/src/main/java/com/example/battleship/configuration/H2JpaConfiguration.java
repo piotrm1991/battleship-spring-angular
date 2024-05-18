@@ -1,16 +1,15 @@
 package com.example.battleship.configuration;
 
 import javax.sql.DataSource;
-import com.example.battleship.security.entity.RefreshToken;
-import com.example.battleship.security.repository.RefreshTokenRepository;
-import com.example.battleship.user.entity.User;
-import com.example.battleship.user.repository.UserRepository;
+import com.example.battleship.lobby.gameroom.entity.GameRoom;
+import com.example.battleship.lobby.gameroom.repository.GameRoomRepository;
+import com.example.battleship.lobby.player.entity.Player;
+import com.example.battleship.lobby.player.repository.PlayerRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,31 +19,30 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories(
         basePackageClasses = {
-                UserRepository.class,
-                RefreshTokenRepository.class
+                PlayerRepository.class,
+                GameRoomRepository.class
         },
-        entityManagerFactoryRef = "mysqlEntityManagerFactory",
-        transactionManagerRef = "mysqlTransactionManager"
+        entityManagerFactoryRef = "h2EntityManagerFactory",
+        transactionManagerRef = "h2TransactionManager"
 )
-public class MySqlJpaConfiguration {
+public class H2JpaConfiguration {
 
-  @Primary
+
   @Bean
-  public LocalContainerEntityManagerFactoryBean mysqlEntityManagerFactory(
-          @Qualifier("mysqlDataSource") DataSource dataSource,
+  public LocalContainerEntityManagerFactoryBean h2EntityManagerFactory(
+          @Qualifier("h2DataSource") DataSource dataSource,
           EntityManagerFactoryBuilder builder
   ) {
 
     return builder
             .dataSource(dataSource)
-            .packages(User.class, RefreshToken.class)
+            .packages(Player.class, GameRoom.class)
             .build();
   }
 
-  @Primary
   @Bean
-  public JpaTransactionManager  mysqlTransactionManager(
-          @Qualifier("mysqlEntityManagerFactory") EntityManagerFactory entityManagerFactory
+  public JpaTransactionManager h2TransactionManager(
+          @Qualifier("h2EntityManagerFactory") EntityManagerFactory entityManagerFactory
   ) {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
     transactionManager.setEntityManagerFactory(entityManagerFactory);

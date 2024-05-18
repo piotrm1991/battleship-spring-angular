@@ -1,6 +1,6 @@
-package com.example.battleship.gameroom.configuration;
+package com.example.battleship.lobby.configuration;
 
-import com.example.battleship.gameroom.controller.LobbyHandler;
+import com.example.battleship.lobby.controller.LobbyHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;

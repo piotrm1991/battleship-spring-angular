@@ -1,6 +1,7 @@
 package com.example.battleship.user.service.impl;
 
 import com.example.battleship.exception.EntityNotFoundException;
+import com.example.battleship.lobby.player.entity.Player;
 import com.example.battleship.security.request.SignupRequest;
 import com.example.battleship.user.entity.User;
 import com.example.battleship.user.enums.UserRoleEnum;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -136,5 +138,12 @@ public class UserServiceImpl implements UserService {
     return userRepository.findByLogin(login).orElseThrow(()
         -> new EntityNotFoundException(
         ExceptionMessagesConstants.createUserWithLoginNotExistsMessage(login)));
+  }
+
+  @Override
+  public User getCurrentlyLoggedUser() {
+    log.info("Getting currently logged in user.");
+
+    return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
 }
