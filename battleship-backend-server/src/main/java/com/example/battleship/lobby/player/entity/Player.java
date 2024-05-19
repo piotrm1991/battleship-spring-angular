@@ -11,6 +11,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing player in the system.
+ */
 @Builder
 @Data
 @AllArgsConstructor

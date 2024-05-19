@@ -1,6 +1,5 @@
 package com.example.battleship.user.service;
 
-import com.example.battleship.lobby.player.entity.Player;
 import com.example.battleship.security.request.SignupRequest;
 import com.example.battleship.user.entity.User;
 import com.example.battleship.user.request.UserCreate;
@@ -87,7 +86,18 @@ public interface UserService {
    */
   User save(User user);
 
+  /**
+   * Gets User object by login.
+   *
+   * @param login String login.
+   * @return User object.
+   */
   User getUserByLogin(String login);
 
+  /**
+   * Gets currently logged-in User.
+   *
+   * @return User object.
+   */
   User getCurrentlyLoggedUser();
 }

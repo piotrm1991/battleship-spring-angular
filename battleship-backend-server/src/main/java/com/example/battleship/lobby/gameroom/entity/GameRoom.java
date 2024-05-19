@@ -12,6 +12,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity class representing private game room in the system.
+ */
 @Builder
 @Data
 @AllArgsConstructor

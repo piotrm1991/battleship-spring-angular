@@ -49,24 +49,4 @@ public class SecurityConfiguration {
 
     return http.build();
   }
-
-//  @Bean
-//  @Order(2)
-//  public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
-//    OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-//    http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
-//            .oidc(Customizer.withDefaults());
-//    http
-//        .exceptionHandling((exceptions) -> exceptions
-//                .defaultAuthenticationEntryPointFor(
-//                        new LoginUrlAuthenticationEntryPoint("/login"),
-//                        new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
-//                )
-//        )
-//        .oauth2ResourceServer((oauth2) -> oauth2
-//                .jwt(Customizer.withDefaults())
-//        );
-//
-//    return http.build();
-//  }
 }

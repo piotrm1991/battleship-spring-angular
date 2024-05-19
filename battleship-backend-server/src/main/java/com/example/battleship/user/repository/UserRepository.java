@@ -29,5 +29,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
    */
   List<User> findAllByStatus(UserStatusEnum status);
 
+  /**
+   * Get User bu login.
+   *
+   * @param login String login.
+   * @return Optional of User.
+   */
   Optional<User> findByLogin(String login);
 }

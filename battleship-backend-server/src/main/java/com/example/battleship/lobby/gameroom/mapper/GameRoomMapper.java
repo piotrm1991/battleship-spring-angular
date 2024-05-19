@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper class responsible for mapping between GameRoom entities
+ * and Game Room DTOs.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -15,6 +19,12 @@ public class GameRoomMapper {
 
   private final ObjectMapper mapper;
 
+  /**
+   * Method maps entity GameRoom to record GameRoomResponse.
+   *
+   * @param gameRoom GameRoom entity to map.
+   * @return GameRoomResponse record.
+   */
   public GameRoomResponse mapEntityToResponse(GameRoom gameRoom) {
     log.info("Mapping Game Room to game room response.");
     try {

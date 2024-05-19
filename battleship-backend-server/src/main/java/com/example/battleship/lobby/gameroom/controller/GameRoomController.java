@@ -1,8 +1,8 @@
 package com.example.battleship.lobby.gameroom.controller;
 
-import java.io.IOException;
 import com.example.battleship.lobby.gameroom.response.GameRoomResponse;
 import com.example.battleship.lobby.gameroom.service.GameRoomService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller class handling game room related HTTP requests.
+ */
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -26,6 +29,12 @@ public class GameRoomController {
 
   private final GameRoomService gameRoomService;
 
+  /**
+   * HTTP POST request for creating new game room
+   * by currently logged-in user.
+   *
+   * @return GameRoomResponse record.
+   */
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -35,6 +44,13 @@ public class GameRoomController {
     return gameRoomService.createNewGameRoom();
   }
 
+  /**
+   * HTTP POST request for connecting currently logged-in
+   * user to the game room.
+   *
+   * @param id Long game room id.
+   * @return GameRoomResponse record.
+   */
   @PostMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
@@ -44,15 +60,31 @@ public class GameRoomController {
     return gameRoomService.connectToGameRoom(id);
   }
 
+  /**
+   * HTTP GET request for getting available rooms.
+   *
+   * @param pageable Pageable pagination information.
+   * @return Page of GameRoomResponse records.
+   */
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-  public Page<GameRoomResponse> getGameRoomsWithOnePlayer(@PageableDefault(size = 5) Pageable pageable) {
+  public Page<GameRoomResponse> getGameRoomsWithOnePlayer(
+          @PageableDefault(size = 5) Pageable pageable
+  ) {
     log.info("GET-request: getting game rooms with one player.");
 
     return gameRoomService.getGameRoomsWithOnePlayer(pageable);
   }
 
+  /**
+   * HTTP DELETE request for disconnected from game room.
+   * In case of disconnecting the player that created the room
+   * it also deleted it.
+   *
+   * @param id Long game room id.
+   * @throws IOException in case of error during sending websocket message.
+   */
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
   @PreAuthorize("hasAnyRole('ADMIN', 'USER')")

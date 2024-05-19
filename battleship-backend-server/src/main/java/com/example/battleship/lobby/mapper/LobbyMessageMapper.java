@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper class responsible for mapping between LobbyMessage.
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -33,8 +36,15 @@ public class LobbyMessageMapper {
     }
   }
 
+  /**
+   * Method maps String payload to UserMessage record.
+   *
+   * @param payload String.
+   * @return UserMessage record.
+   */
   public UserMessage mapPayloadToUserMessage(String payload) {
     log.info("Writing payload to user message record.");
+
     try {
 
       return mapper.readValue(payload, UserMessage.class);

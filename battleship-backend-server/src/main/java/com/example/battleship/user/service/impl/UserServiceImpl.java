@@ -1,7 +1,6 @@
 package com.example.battleship.user.service.impl;
 
 import com.example.battleship.exception.EntityNotFoundException;
-import com.example.battleship.lobby.player.entity.Player;
 import com.example.battleship.security.request.SignupRequest;
 import com.example.battleship.user.entity.User;
 import com.example.battleship.user.enums.UserRoleEnum;

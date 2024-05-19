@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * Mapper class responsible for mapping between Player DTOs.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -15,6 +18,12 @@ public class PlayerMapper {
 
   private final ObjectMapper mapper;
 
+  /**
+   * Maps a Player entity to PLayerResponse record.
+   *
+   * @param player The Player entity.
+   * @return A PlayerResponse record.
+   */
   public PlayerResponse mapEntityToResponse(Player player) {
     log.info("Mapping Player to player response.");
     try {

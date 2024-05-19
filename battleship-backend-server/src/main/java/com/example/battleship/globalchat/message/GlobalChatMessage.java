@@ -11,7 +11,5 @@ public record GlobalChatMessage(
      String content,
      String sender,
 
-     String time,
-
-     String receiver
+     String time
 ) { }

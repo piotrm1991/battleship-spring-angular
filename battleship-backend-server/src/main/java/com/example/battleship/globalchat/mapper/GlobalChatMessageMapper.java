@@ -1,7 +1,7 @@
 package com.example.battleship.globalchat.mapper;
 
-import com.example.battleship.globalchat.message.GlobalChatMessage;
 import com.example.battleship.globalchat.enums.GlobalChatMessageType;
+import com.example.battleship.globalchat.message.GlobalChatMessage;
 import com.example.battleship.util.DateTimeConstants;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,25 +36,5 @@ public class GlobalChatMessageMapper {
       throw new RuntimeException(
               "Error while writing global chat message record to string: " + e.getMessage(), e);
     }
-  }
-
-  /**
-   * Method prepares chat message record according to given data.
-   *
-   * @param type GlobalChatMessageType enum.
-   * @param sender String sender.
-   * @param message String message content.
-   * @return GlobalChatMessage record.
-   */
-  public GlobalChatMessage prepareChatMessageRecord(GlobalChatMessageType type, String sender, String message) {
-    log.info("Preparing chat message.");
-
-    return new GlobalChatMessage(
-            type,
-            message,
-            sender,
-            LocalTime.now().format(DateTimeConstants.TIME_FORMATTER),
-            ""
-    );
   }
 }
