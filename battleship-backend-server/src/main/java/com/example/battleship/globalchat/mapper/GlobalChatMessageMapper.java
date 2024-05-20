@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * Mapper class responsible for mapping and preparing global chat messages.
+ * Mapper class responsible for mapping global chat messages.
  */
 @Slf4j
 @RequiredArgsConstructor

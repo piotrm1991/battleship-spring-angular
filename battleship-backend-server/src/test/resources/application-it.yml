@@ -6,7 +6,7 @@ spring:
     generate-ddl: 'true'
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
   flyway:
     locations: filesystem:./src/main/resources/db/migration
     enabled: true
